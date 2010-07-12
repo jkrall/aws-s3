@@ -307,21 +307,23 @@ end
 # than I've already had to...).
 module Net
   class HTTPGenericRequest
-    def send_request_with_body_stream(sock, ver, path, f)
+    def send_request_with_body_stream(sock, ver, path, f, send_only=nil)
       raise ArgumentError, "Content-Length not given and Transfer-Encoding is not `chunked'" unless content_length() or chunked?
       unless content_type()
         warn 'net/http: warning: Content-Type did not set; using application/x-www-form-urlencoded' if $VERBOSE
         set_content_type 'application/x-www-form-urlencoded'
       end
-      write_header sock, ver, path
-      if chunked?
-        while s = f.read(chunk_size)
-          sock.write(sprintf("%x\r\n", s.length) << s << "\r\n")
-        end
-        sock.write "0\r\n\r\n"
-      else
-        while s = f.read(chunk_size)
-          sock.write s
+      write_header(sock, ver, path) unless send_only == :body
+      unless send_only == :header
+        if chunked?
+          while s = f.read(chunk_size)
+            sock.write(sprintf("%x\r\n", s.length) << s << "\r\n")
+          end
+          sock.write "0\r\n\r\n"
+        else
+          while s = f.read(chunk_size)
+            sock.write s
+          end
         end
       end
     end
