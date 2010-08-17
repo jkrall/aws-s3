@@ -5,8 +5,8 @@ module AWS
       MINOR    = '6'
       TINY     = '2' 
       BETA     = nil #Time.now.to_i.to_s
-    end
+    end unless defined?(self::VERSION)
     
-    Version = [VERSION::MAJOR, VERSION::MINOR, VERSION::TINY, VERSION::BETA].compact * '.'
+    Version = [VERSION::MAJOR, VERSION::MINOR, VERSION::TINY, VERSION::BETA].compact * '.' unless defined?(self::Version)
   end
 end
