@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files  = %w(README COPYING INSTALL)
   s.homepage          = 'http://amazon.rubyforge.org'
   s.rubyforge_project = 'amazon'
-  s.files             = Dir.glob("{bin,lib,support}/**/*") + %w('Rakefile')
+  s.files             = Dir.glob("{bin,lib,support}/**/*") + %w(Rakefile)
   s.executables       << 's3sh'
   s.test_files        = Dir['test/**/*']
 
