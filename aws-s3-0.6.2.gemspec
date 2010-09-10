@@ -1,3 +1,4 @@
+require 'rubygems'
 require 'rake'
 require File.dirname(__FILE__) + '/lib/aws/s3/version'
 Gem::Specification.new do |s|
